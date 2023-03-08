@@ -3,25 +3,26 @@ import { useSpotifyAuth } from "./utils";
 import { Themes } from "./assets/Themes";
 import SpotifyAuthButton from "./components/authenticated";
 import SongList from "./components/SongList";
+import { NavigationContainer } from '@react-navigation/native';
+import 'react-native-gesture-handler';
+import { createStackNavigator } from "@react-navigation/stack";
+import HomeScreen from "./Screens/HomeScreen";
+import PreviewScreen from "./Screens/PreviewScreen";
+import DetailsScreen from "./Screens/DetailsScreen";
 
-export default function App() {
-  // Pass in true to useSpotifyAuth to use the album ID (in env.js) instead of top tracks
-  const { token, tracks, getSpotifyAuth } = useSpotifyAuth();
-  let contentDisplay = null;
-  const renderSongItem = ({})
-  if (token) {
-    contentDisplay = <SongList tracks={tracks} />
-  }
-  else {
-    contentDisplay = (
-      <SpotifyAuthButton authenticationFunction={getSpotifyAuth} />
-    );
+const Stack = createStackNavigator();
 
-  }
+export default function App({ }) {
   return (
-    <SafeAreaView style={styles.container}>
-      {contentDisplay}
-    </SafeAreaView >
+    <NavigationContainer >
+      <Stack.Navigator screenOptions={{
+        headerShown: false
+      }}>
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="DetailsScreen" component={DetailsScreen} />
+        <Stack.Screen name="PreviewScreen" component={PreviewScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
